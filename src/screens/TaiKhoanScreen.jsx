@@ -1,7 +1,7 @@
 import {Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import Geolib from 'geolib';
+import haversine from 'haversine';
 
 const TaiKhoanScreen = () => {
   const [distance, setDistance] = useState(0);
@@ -12,11 +12,15 @@ const TaiKhoanScreen = () => {
       position => {
         const {latitude, longitude} = position.coords;
         if (prevLocation) {
-          const distanceCovered = Geolib.getDistance(prevLocation, {
-            latitude,
-            longitude,
-          });
-          setDistance(distance + distanceCovered / 1000); // đổi sang km
+          const distanceCovered = haversine(
+            prevLocation,
+            {
+              latitude,
+              longitude,
+            },
+            {unit: 'km'},
+          );
+          setDistance(distance + distanceCovered); // đổi sang km
         }
         setPrevLocation({latitude, longitude});
       },
