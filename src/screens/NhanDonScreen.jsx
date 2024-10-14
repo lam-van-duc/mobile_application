@@ -1,60 +1,71 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
+import React, {useRef, useState} from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import {RNCamera} from 'react-native-camera';
+import ListDataNhanDon from '../components/nhandon/ListDataNhanDon';
 
 const NhanDonScreen = () => {
+  const scannerRef = useRef(null);
+  const [qrValue, setQrValue] = useState([]);
+
+  const onSuccess = e => {
+    if (e?.data) {
+      setQrValue(prevQrValues => {
+        // Kiểm tra xem giá trị đã tồn tại hay chưa
+        if (!prevQrValues.includes(e?.data)) {
+          // Nếu chưa tồn tại, thêm vào danh sách
+          return [...prevQrValues, e?.data];
+        }
+        // Nếu đã tồn tại, trả về danh sách cũ không thay đổi
+        return prevQrValues;
+      });
+    }
+
+    setTimeout(() => {
+      if (scannerRef.current) {
+        scannerRef.current.reactivate(); // Kích hoạt lại scanner
+      }
+    }, 2000);
+  };
+
   return (
-    <View>
-      <View style={styles.viewScannerQR}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.containerCameraScanner}>
         <QRCodeScanner
-          onRead={this.onSuccess}
-          flashMode={RNCamera.Constants.FlashMode.torch}
-          topContent={
-            <Text style={styles.centerText}>
-              Go to{' '}
-              <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-              your computer and scan the QR code.
-            </Text>
-          }
-          bottomContent={
-            <TouchableOpacity style={styles.buttonTouchable}>
-              <Text style={styles.buttonText}>OK. Got it!</Text>
-            </TouchableOpacity>
-          }
+          cameraContainerStyle={styles.cameraContainerStyle}
+          cameraStyle={styles.cameraStyle}
+          ref={scannerRef}
+          onRead={onSuccess}
+          //flashMode={RNCamera.Constants.FlashMode.torch}
         />
       </View>
-      <View style={styles.viewListDataScanner}></View>
-    </View>
+      <ListDataNhanDon
+        qrValue={qrValue}
+        onRemoveItem={data => {
+          setQrValue(data);
+        }}
+      />
+    </SafeAreaView>
   );
 };
 
 export default NhanDonScreen;
 const styles = StyleSheet.create({
-  viewScannerQR: {
-    aspectRatio: 16 / 9,
-    backgroundColor: 'red',
-  },
-  viewListDataScanner: {
-    height: '100%',
-    backgroundColor: 'red',
-  },
-  centerText: {
+  container: {
     flex: 1,
-    fontSize: 18,
-    padding: 32,
-    color: '#777',
+    display: 'flex',
+    flexDirection: 'column',
   },
-
-  textBold: {
-    fontWeight: '500',
-    color: '#000',
+  containerCameraScanner: {
+    backgroundColor: '#3333',
+    aspectRatio: 16 / 9,
   },
-  buttonText: {
-    fontSize: 21,
-    color: 'rgb(0,122,255)',
+  cameraContainerStyle: {
+    width: '100%',
+    alignSelf: 'center',
   },
-  buttonTouchable: {
-    padding: 16,
+  cameraStyle: {
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center',
   },
 });

@@ -3,13 +3,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import GiaoHangScreen from '../screens/GiaoHangScreen';
 import NhanDonScreen from '../screens/NhanDonScreen';
-import TinhNangScreen from '../screens/TinhNangScreen';
 import TaiKhoanScreen from '../screens/TaiKhoanScreen';
+import {COLOR_DEFAULT} from '../components/app/ColorApp';
 
 const Stack = createStackNavigator();
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: '#074cfa',
+    backgroundColor: COLOR_DEFAULT,
   },
   headerTintColor: 'white',
   headerBackTitle: 'Back',

@@ -4,7 +4,6 @@ import {
   DanhSachDonGiaoStackNavigator,
   NhanDonStackNavigator,
   TaiKhoanStackNavigator,
-  TinhNangStackNavigator,
   TrangChuStackNavigator,
 } from './MainStackNavigator';
 import OcIcon from 'react-native-vector-icons/Octicons';
@@ -47,14 +46,6 @@ const BottomTabNavigator = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => NhanDon(color),
-        }}
-      />
-      <Tab.Screen
-        name="Tính năng"
-        component={TinhNangStackNavigator}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({color}) => TinhNang(color),
         }}
       />
       <Tab.Screen
