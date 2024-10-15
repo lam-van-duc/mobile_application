@@ -64,20 +64,6 @@ const DanhSachDonGiaoStackNavigator = () => {
   );
 };
 
-const TinhNangStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="TinhNang"
-      screenOptions={screenOptionStyle}>
-      <Stack.Screen
-        name="TinhNang"
-        component={TinhNangScreen}
-        options={options('Tính năng')}
-      />
-    </Stack.Navigator>
-  );
-};
-
 const TaiKhoanStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -96,5 +82,4 @@ export {
   DanhSachDonGiaoStackNavigator,
   NhanDonStackNavigator,
   TaiKhoanStackNavigator,
-  TinhNangStackNavigator,
 };

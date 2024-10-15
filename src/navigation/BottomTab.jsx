@@ -18,7 +18,6 @@ const DonGiao = color => (
 const NhanDon = color => (
   <MaterialIcon name="cube-scan" size={25} color={color} />
 );
-const TinhNang = color => <OcIcon name="apps" size={25} color={color} />;
 const TaiKhoan = color => <FeatherIcon name="user" size={25} color={color} />;
 
 const BottomTabNavigator = () => {
